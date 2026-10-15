@@ -13,9 +13,8 @@ const TextEditorParameters = z.object({
 
 export const buildStrReplaceTool = (fileSystem: VirtualFileSystem) => {
   return {
-    type: "provider-defined" as const,
-    id: "anthropic.text_editor_20250124" as const,
-    args: {},
+    description:
+      "View, create, and edit files in the virtual file system. Commands: view, create, str_replace, insert.",
     parameters: TextEditorParameters,
     execute: async ({
       command,

@@ -1,4 +1,5 @@
 import { anthropic } from "@ai-sdk/anthropic";
+import { wrapLanguageModel } from "ai";
 import {
   LanguageModelV1,
   LanguageModelV1StreamPart,
@@ -512,5 +513,14 @@ export function getLanguageModel() {
     return new MockLanguageModel("mock-claude-3-5-sonnet");
   }
 
-  return anthropic("claude-3-7-sonnet-latest");
+  // ai v4 always sends temperature: 0, which claude-sonnet-5-5 rejects
+  return wrapLanguageModel({
+    model: anthropic("claude-sonnet-5-5"),
+    middleware: {
+      transformParams: async ({ params }) => ({
+        ...params,
+        temperature: undefined,
+      }),
+    },
+  });
 }

@@ -34,3 +34,12 @@ UIGen is a Next.js 15 (App Router, React 19, Tailwind 4) app where a user chats 
 **UI**: shadcn-style primitives in `src/components/ui`, feature components in `chat/`, `editor/` (Monaco), `preview/`, `auth/`. Path alias `@/` → `src/`.
 
 Tests live in `__tests__` folders next to the code they cover.
+
+## Code style
+
+- Use comments sparingly. Only comment complex code.
+
+## Database
+
+- The database schema is defined in `prisma/schema.prisma`. Reference it whenever you need to understand the structure of data stored in the database.
+I 

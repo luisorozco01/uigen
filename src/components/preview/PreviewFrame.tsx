@@ -36,21 +36,21 @@ export function PreviewFrame() {
           "/src/App.tsx",
         ];
 
-        if (!files.has(entryPoint)) {
-          const found = possibleEntries.find((path) => files.has(path));
-          if (found) {
-            foundEntryPoint = found;
-            setEntryPoint(found);
-          } else if (files.size > 0) {
-            // Just use the first .jsx/.tsx file found
-            const firstJSX = Array.from(files.keys()).find(
-              (path) => path.endsWith(".jsx") || path.endsWith(".tsx")
-            );
-            if (firstJSX) {
-              foundEntryPoint = firstJSX;
-              setEntryPoint(firstJSX);
-            }
+        // Always prefer a conventional entry file: a fallback chosen earlier
+        // (e.g. while App.jsx was still being generated) must not stick.
+        const found = possibleEntries.find((path) => files.has(path));
+        if (found) {
+          foundEntryPoint = found;
+        } else if (files.size > 0) {
+          const firstJSX = Array.from(files.keys()).find(
+            (path) => path.endsWith(".jsx") || path.endsWith(".tsx")
+          );
+          if (firstJSX) {
+            foundEntryPoint = firstJSX;
           }
+        }
+        if (foundEntryPoint !== entryPoint) {
+          setEntryPoint(foundEntryPoint);
         }
 
         if (files.size === 0) {
